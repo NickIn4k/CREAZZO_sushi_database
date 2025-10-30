@@ -16,7 +16,6 @@ public class DataBase {
             return false;
 
         String query = "INSERT INTO menu(piatto, prezzo, quantita) VALUES (?, ?, ?)"; //i ? servono per evitare le SQL injections
-        System.out.println(query);
         try {
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -180,6 +179,4 @@ public class DataBase {
         }
         return true;
     }
-
-
 }
