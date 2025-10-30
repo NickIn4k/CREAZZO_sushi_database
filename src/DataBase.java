@@ -10,7 +10,7 @@ public class DataBase {
         System.out.println("Connected to database successfully");
     }
 
-    // CREATE
+    //region C - CREATE
     public boolean insert(String nomePiatto, float prz, int qt) {
         if(!checkConnection())
             return false;
@@ -32,8 +32,9 @@ public class DataBase {
 
         return true;
     }
+    //endregion
 
-    // READ
+    //region R - READ
     public String selectAll(){
         String rslt = "";
         if(!checkConnection())
@@ -106,8 +107,31 @@ public class DataBase {
 
         return msg;
     }
+    //endregion
 
-    // DELETE
+    //region U - UPDATE
+    public boolean updateById(int key, String nome, float prz, int qt) {
+        String query = "UPDATE menu SET piatto = ?, prezzo = ?, quantita = ? WHERE id = ?";
+
+        if(!checkConnection())
+            return false;
+
+        try(PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, nome);
+            statement.setFloat(2, prz);
+            statement.setInt(3, qt);
+            statement.setInt(4, key);
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            System.err.println("Errore di connessione al database: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    //endregion
+
+    //region D - DELETE
     public boolean deleteByName(String piatto){
         String query = "DELETE FROM menu WHERE piatto = ?";
 
@@ -141,6 +165,7 @@ public class DataBase {
 
         return true;
     }
+    //endregion
 
     // Metodo di check (per evitare codice ripetuto)
     private boolean checkConnection() {
@@ -155,5 +180,6 @@ public class DataBase {
         }
         return true;
     }
+
 
 }
