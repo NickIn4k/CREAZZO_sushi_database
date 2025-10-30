@@ -68,4 +68,56 @@ public class DataBase {
 
         return true;
     }
+
+    public boolean deleteByName(String piatto){
+        try{
+            if(connection == null || !connection.isValid(5)){
+                System.err.println("Errore di connessione al database");
+                return false;
+            }
+        }catch(SQLException e){
+            System.err.println("Errore di connessione al database");
+            return false;
+        }
+
+        String query = "DELETE FROM menu WHERE piatto = ?";
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, piatto);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore di connessione al database: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean deleteByIndex(int key){
+        try{
+            if(connection == null || !connection.isValid(5)){
+                System.err.println("Errore di connessione al database");
+                return false;
+            }
+        }catch(SQLException e){
+            System.err.println("Errore di connessione al database");
+            return false;
+        }
+
+        String query = "DELETE FROM menu WHERE id = ?";
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, key);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore di connessione al database: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
 }
