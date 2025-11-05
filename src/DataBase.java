@@ -2,12 +2,20 @@ import java.sql.*;
 
 public class DataBase {
     private final Connection connection;
+    private static DataBase instance;
 
     //In questo caso è meglio propagare => evito la creazione di un oggetto errato
-    public DataBase() throws SQLException {
+    private DataBase() throws SQLException {
         String URL = "jdbc:sqlite:database/sushi.db";   //Quale file userai? è un path!
         connection = DriverManager.getConnection(URL);  //Driver: parte software per gestire funzioni hardware
         System.out.println("Connected to database successfully");
+    }
+
+    // Fondamentale per la singleton
+    public static DataBase getInstance() throws SQLException {
+        if(instance == null)
+            instance = new DataBase();
+        return instance;
     }
 
     //region C - CREATE

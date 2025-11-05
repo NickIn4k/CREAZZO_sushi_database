@@ -9,7 +9,7 @@ public class Main {
         DataBase db = null;
         String rsp;
         try {
-            db = new DataBase();
+            db = DataBase.getInstance();
         } catch (SQLException e) {
             System.err.println("Errore di connessione: " + e.getMessage()); // Scrittura nello stream di errore
             System.exit(-1);
